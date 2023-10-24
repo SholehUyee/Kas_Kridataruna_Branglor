@@ -1,0 +1,10 @@
+Program untuk memudahkan kridataruna atau muda - mudi dukuh branglor, mancasan, dalam hal mendata kas rutin setiap pertemuan rapat kridataruna branglor.
+
+Dibuat Oleh : 
+			ILHAM SHOLEH
+			190103013
+			TI-19A1
+
+
+
+anggota kridataruna dan pengolahan data kas bulanan anggota.

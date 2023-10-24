@@ -1,0 +1,485 @@
+1,,
+ 
+CREATE TABLE t_statusanggota(
+
+	statusanggota_kode char(3) PRIMARY KEY NOT null COMMENT 'kode status anggota yang digunakan',
+    status_anggota ENUM('Pelajar','Pekerja') NOT Null COMMENT 'pilihan untuk status anggota', 
+    rt_rw ENUM('01/08','01/07','02/07','03/07') NOT Null COMMENT 'pilihan untuk RT dan RW yang dipilih',     
+
+);
+
+2..,
+CREATE TABLE t_kas_bulanan(
+    kas_bulanan_kode char(3) PRIMARY KEY NOT null COMMENT 'kode kas bulanan yang digunakan',
+	anggota_kode char(3) NOT null COMMENT 'kode anggota yang digunakan' REFERENCES t_anggota(anggota_kode) ON UPDATE CASCADE ON DELETE NO ACTION,
+    tanggal_kas date NOT null comment 'tanggal penarikan kas',
+    nominal_pembayaran int(10) NOT null comment 'nominal pembayaran kas',
+    pembayaran_kas_anggota int(10) NOT null comment 'kas yang dibayarkan oleh anggota',
+    keterangan varchar(50) NOT null comment 'keterangan lunas kas ataupun belum'
+)
+
+--
+ALTER TABLE t_anggota ADD FOREIGN KEY t_anggota(statusanggota_kode) REFERENCES t_statusanggota(statusanggota_kode)
+--
+
+3.,
+CREATE TABLE t_kas_bulanan(
+    kas_bulanan_kode char(3) PRIMARY KEY NOT null COMMENT 'kode kas bulanan yang digunakan',
+	anggota_kode char(3) NOT null COMMENT 'kode anggota yang digunakan' REFERENCES t_anggota(anggota_kode) ON UPDATE CASCADE ON DELETE NO ACTION,
+    tanggal_kas date NOT null comment 'tanggal penarikan kas',
+    jumlah_anggota_sudah_setoran int(10) NOT null comment 'jumlah anggota yang sudah setoran kas',
+    jumlah_anggota_belum_setoran int(10) NOT null comment 'jumlah anggota yang sudah setoran kas',
+    keterangan varchar(50) NOT null comment 'keterangan lunas kas ataupun belum'
+);
+
+
+
+--
+
+ALTER TABLE t_kas_bulanan ADD FOREIGN KEY t_kas_bulanan(anggota_kode) REFERENCES t_anggota(anggota_kode)
+
+
+
+
+4,.
+
+CREATE TABLE t_total_kas(
+    total_kas_kode char(3) PRIMARY KEY NOT null COMMENT 'kode kas bulanan yang digunakan',
+    kas_bulanan_kode char(3) NOT null COMMENT 'kode kas bulanan yang digunakan' REFERENCES t_kas_bulanan(kas_bulanan_kode) ON UPDATE CASCADE ON DELETE NO ACTION,
+    tanggal_laporan date NOT null comment 'tanggal laporan kas',
+    jumlah_pengeluaran_kas int(10) NOT null comment 'jumlah uang kas',
+    jumlah_uang_kas int(10) NOT null comment 'jumlah uang kas',
+    keterangan varchar(50) NOT null comment 'keterangan'
+);
+
+
+--
+ALTER TABLE t_total_kas ADD FOREIGN KEY t_total_kas(kas_bulanan_kode) REFERENCES t_kas_bulanan(kas_bulanan_kode)
+-
+
+5,.
+
+CREATE TABLE t_anggota_bendahara(
+    bendahara_kode char(3) PRIMARY KEY NOT null COMMENT 'kode anggota yang digunakan',
+    kas_bulanan_kode char(3) NOT null COMMENT 'kode kas bulanan yang digunakan' REFERENCES t_kas_bulanan(kas_bulanan_kode) ON UPDATE CASCADE ON DELETE NO ACTION,
+    nama_anggota varchar(50) NOT null comment 'nama dari anggota krida taruna',
+    jenis_kelamin ENUM('Laki - Laki','Perempuan') NOT Null COMMENT 'pilihan untuk Jenis Kelamin yang dipilih',
+    status_bendahara varchar(50) NOT null comment 'status dari bendahara',
+    tanggung_jawab varchar(50) NOT null comment 'tanggung jawab dari tugas'
+);
+
+
+--
+ALTER TABLE t_anggota_bendahara ADD FOREIGN KEY t_anggota_bendahara(kas_bulanan_kode) REFERENCES t_kas_bulanan(kas_bulanan_kode)
+-
+
+================================================
+input
+
+1.,
+
+INSERT INTO `t_statusanggota`(
+    `statusanggota_kode`,
+    `status_anggota`,
+    `rt_rw`
+)
+VALUES(
+    'S18',
+    'Pelajar',
+    '01/08'
+);
+
+INSERT INTO `t_statusanggota`(
+    `statusanggota_kode`,
+    `status_anggota`,
+    `rt_rw`
+)
+VALUES(
+    'K18',
+    'Pekerja',
+    '01/08'
+);
+
+INSERT INTO `t_statusanggota`(
+    `statusanggota_kode`,
+    `status_anggota`,
+    `rt_rw`
+)
+VALUES(
+    'S27',
+    'Pelajar',
+    '02/07'
+);
+
+INSERT INTO `t_statusanggota`(
+    `statusanggota_kode`,
+    `status_anggota`,
+    `rt_rw`
+)
+VALUES(
+    'K27',
+    'Pekerja',
+    '02/07'
+);
+
+
+INSERT INTO `t_statusanggota`(
+    `statusanggota_kode`,
+    `status_anggota`,
+    `rt_rw`
+)
+VALUES(
+    'S37',
+    'Pelajar',
+    '03/07'
+);
+
+INSERT INTO `t_statusanggota`(
+    `statusanggota_kode`,
+    `status_anggota`,
+    `rt_rw`
+)
+VALUES(
+    'K37',
+    'Pekerja',
+    '03/07'
+);
+
+INSERT INTO `t_statusanggota`(
+    `statusanggota_kode`,
+    `status_anggota`,
+    `rt_rw`
+)
+VALUES(
+    'S17',
+    'Pelajar',
+    '01/07'
+);
+
+INSERT INTO `t_statusanggota`(
+    `statusanggota_kode`,
+    `status_anggota`,
+    `rt_rw`
+)
+VALUES(
+    'K17',
+    'Pekerja',
+    '01/07'
+)
+
+
+2,.
+INSERT INTO `t_anggota`(
+    `anggota_kode`,
+    `statusanggota_kode`,
+    `nourut_anggota`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `no_hp`
+)
+VALUES(
+    'A1',
+    'K18',
+    '1',
+    'Ahmad Janaka',
+    'Laki - Laki',
+    '083810830883'
+);
+
+INSERT INTO `t_anggota`(
+    `anggota_kode`,
+    `statusanggota_kode`,
+    `nourut_anggota`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `no_hp`
+)
+VALUES(
+    'A2',
+    'S17',
+    '2',
+    'Andi Putra',
+    'Laki - Laki',
+    '081838981891'
+);
+
+INSERT INTO `t_anggota`(
+    `anggota_kode`,
+    `statusanggota_kode`,
+    `nourut_anggota`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `no_hp`
+)
+VALUES(
+    'A3',
+    'S17',
+    '3',
+    'Ayu Putri',
+    'Perempuan',
+    '089183190180'
+);
+
+INSERT INTO `t_anggota`(
+    `anggota_kode`,
+    `statusanggota_kode`,
+    `nourut_anggota`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `no_hp`
+)
+VALUES(
+    'A4',
+    'K27',
+    '4',
+    'Bayu Bagus',
+    'Laki - Laki',
+    '087379183972'
+);
+
+INSERT INTO `t_anggota`(
+    `anggota_kode`,
+    `statusanggota_kode`,
+    `nourut_anggota`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `no_hp`
+)
+VALUES(
+    'A5',
+    'K37',
+    '5',
+    'Berlian Dwiana Putri',
+    'Perempuan',
+    '081983983198'
+)
+
+
+3,.
+
+--
+
+INSERT INTO `t_kas_bulanan`(
+    `kas_bulanan_kode`,
+    `anggota_kode`,
+    `tanggal_kas`,
+    `nominalpembayaran_kas`,
+    `pembayaran_kas_anggota`,
+    `keterangan`
+)
+VALUES(
+    'K1',
+    'A1',
+    '2022-01-04',
+    '10000',
+    '10000',
+    'Sudah membayar kas bulanan'
+);
+
+INSERT INTO `t_kas_bulanan`(
+    `kas_bulanan_kode`,
+    `anggota_kode`,
+    `tanggal_kas`,
+    `nominalpembayaran_kas`,
+    `pembayaran_kas_anggota`,
+    `keterangan`
+)
+VALUES(
+    'K2',
+    'A2',
+    '2022-01-04',
+    '5000',
+    '0',
+    'Belum membayar kas bulanan'
+);
+
+INSERT INTO `t_kas_bulanan`(
+    `kas_bulanan_kode`,
+    `anggota_kode`,
+    `tanggal_kas`,
+    `nominalpembayaran_kas`,
+    `pembayaran_kas_anggota`,
+    `keterangan`
+)
+VALUES(
+    'K3',
+    'A3',
+    '2022-01-04',
+    '5000',
+    '5000',
+    'Sudah membayar kas bulanan'
+);
+
+
+
+---------------
+4.,
+
+INSERT INTO `t_anggota_bendahara`(
+    `nourut`,
+    `kas_bulanan_kode`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `status_bendahara`,
+    `tanggung_jawab`
+)
+VALUES(
+    '5',
+    'K5',
+    'Ayu Putri',
+    'Perempuan',
+    'Ketua Bendahara',
+    'Sudah terlaksana menarik uang kas bulanan anggota') 
+
+INSERT INTO `t_anggota_bendahara`(
+    `nourut`,
+    `kas_bulanan_kode`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `status_bendahara`,
+    `tanggung_jawab`
+)
+VALUES(
+    '2',
+    'K2',
+    'Ayu Putri',
+    'Perempuan',
+    'Ketua Bendahara',
+    'Sudah terlaksana menarik uang kas bulanan anggota');
+    
+    INSERT INTO `t_anggota_bendahara`(
+    `nourut`,
+    `kas_bulanan_kode`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `status_bendahara`,
+    `tanggung_jawab`
+)
+VALUES(
+    '3',
+    'K3',
+    'Ayu Putri',
+    'Perempuan',
+    'Ketua Bendahara',
+    'Sudah terlaksana menarik uang kas bulanan anggota');
+    
+    INSERT INTO `t_anggota_bendahara`(
+    `nourut`,
+    `kas_bulanan_kode`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `status_bendahara`,
+    `tanggung_jawab`
+)
+VALUES(
+    '4',
+    'K4',
+    'Ayu Putri',
+    'Perempuan',
+    'Ketua Bendahara',
+    'Sudah terlaksana menarik uang kas bulanan anggota'); 
+INSERT INTO `t_anggota_bendahara`(
+    `nourut`,
+    `kas_bulanan_kode`,
+    `nama_anggota`,
+    `jenis_kelamin`,
+    `status_bendahara`,
+    `tanggung_jawab`
+)
+VALUES(
+    '5',
+    'K5',
+    'Berlian Dwiana Putri',
+    'Perempuan',
+    'Wakil Ketua Bendahara',
+    'Sudah terlaksana menarik uang kas bulanan anggota') 
+
+5,,
+
+INSERT INTO `t_total_kas`(
+    `total_kas_kode`,
+    `kas_bulanan_kode`,
+    `tanggal_laporan`,
+    `jumlah_uang_masuk`,
+    `jumlah_pengeluaran_kas`,
+    `jumlah_uang_kas`
+)
+VALUES(
+    'TK1',
+    'K1',
+    '2022-01-04',
+    '10000',
+    '0',
+    '10000'
+);
+
+INSERT INTO `t_total_kas`(
+    `total_kas_kode`,
+    `kas_bulanan_kode`,
+    `tanggal_laporan`,
+    `jumlah_uang_masuk`,
+    `jumlah_pengeluaran_kas`,
+    `jumlah_uang_kas`
+)
+VALUES(
+    'TK2',
+    'K2',
+    '2022-01-04',
+    '0',
+    '0',
+    '10000'
+);
+
+INSERT INTO `t_total_kas`(
+    `total_kas_kode`,
+    `kas_bulanan_kode`,
+    `tanggal_laporan`,
+    `jumlah_uang_masuk`,
+    `jumlah_pengeluaran_kas`,
+    `jumlah_uang_kas`
+)
+VALUES(
+    'TK3',
+    'K3',
+    '2022-01-04',
+    '5000',
+    '0',
+    '15000'
+);
+
+INSERT INTO `t_total_kas`(
+    `total_kas_kode`,
+    `kas_bulanan_kode`,
+    `tanggal_laporan`,
+    `jumlah_uang_masuk`,
+    `jumlah_pengeluaran_kas`,
+    `jumlah_uang_kas`
+)
+VALUES(
+    'TK4',
+    'K4',
+    '2022-02-09',
+    '10000',
+    '0',
+    '25000'
+);
+
+INSERT INTO `t_total_kas`(
+    `total_kas_kode`,
+    `kas_bulanan_kode`,
+    `tanggal_laporan`,
+    `jumlah_uang_masuk`,
+    `jumlah_pengeluaran_kas`,
+    `jumlah_uang_kas`
+)
+VALUES(
+    'TK5',
+    'K5',
+    '2022-02-09',
+    '10000',
+    '5000',
+    '30000'
+)
+
+
+

@@ -1,0 +1,64 @@
+Sub aturdgv()
+        Try
+            tb_a.Text = dgvw1.Columns(0).Width = 3
+            cb_sa.Text = dgvw1.Columns(1).Width = 3
+            tbnama.Text = dgvw1.Columns(2).Width = 50
+            cbjk.Text = dgvw1.Columns(3).Width = 20
+            tbno.Text = dgvw1.Columns(4).Width = 15
+
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+        teksaktif()
+    End Sub
+
+
+
+    Private Sub FormDataAnggota_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        teksaktif()
+        koneksi()
+        tampildata()
+        cb_sa.Items.Add("S18")
+        cb_sa.Items.Add("K18")
+        cb_sa.Items.Add("S17")
+        cb_sa.Items.Add("K17")
+        cb_sa.Items.Add("S27")
+        cb_sa.Items.Add("K27")
+        cb_sa.Items.Add("S37")
+        cb_sa.Items.Add("K37")
+        cbjk.Items.Add("Laki - Laki")
+        cbjk.Items.Add("Perempuan")
+    End Sub
+
+
+mysqlconn = new mysqlconnect
+
+
+----------------
+
+
+
+    Sub teksaktif()
+        tb_a.Enabled = True
+        cb_sa.Enabled = True
+        tbnama.Enabled = True
+        cbjk.Enabled = True
+        tbno.Enabled = True
+    End Sub
+
+    Sub teksnonaktif()
+        tb_a.Enabled = True
+        cb_sa.Enabled = False
+        tbnama.Enabled = False
+        cbjk.Enabled = False
+        tbno.Enabled = False
+    End Sub
+
+    Sub kosongteks()
+        tb_a.Text = ""
+        cb_sa.Text = ""
+        tbnama.Text = ""
+        cbjk.Text = ""
+        tbno.Text = ""
+    End Sub

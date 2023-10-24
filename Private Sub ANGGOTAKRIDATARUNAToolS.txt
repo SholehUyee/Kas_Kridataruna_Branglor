@@ -1,0 +1,15 @@
+  Private Sub ANGGOTAKRIDATARUNAToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ANGGOTAKRIDATARUNAToolStripMenuItem.Click
+        FormInputAnggota.ShowDialog()
+    End Sub
+
+    Private Sub KASBULANANToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KASBULANANToolStripMenuItem.Click
+        FormInputKas.ShowDialog()
+    End Sub
+
+    Private Sub ANGGOTAKRIDATARUNAToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ANGGOTAKRIDATARUNAToolStripMenuItem1.Click
+        FormModifyDataAnggota.ShowDialog()
+    End Sub
+
+    Private Sub KASBULANANToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles KASBULANANToolStripMenuItem1.Click
+        FormModifyData.ShowDialog()
+    End Sub
